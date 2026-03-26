@@ -14,6 +14,7 @@
 \usepackage{xparse}
 \usepackage{bm}
 \usepackage{bbm}
+\usepackage{listings}
 \usepackage[most]{tcolorbox}
 
 % newcomands ==============================
@@ -41,9 +42,24 @@
 \setcounter{questionCounter}{0}
 \newcommand{\Question}[1]{%
     \stepcounter{questionCounter} % Incrémente le compteur
-    \noindent\textbf{Question \thequestionCounter :} #1
+    \bigskip\noindent\textbf{Question \thequestionCounter :} #1
     \par % Saut de ligne
+  }
+
+% Style code   ============================
+\lstdefinestyle{customc}{
+  language=Python,  
+  breaklines=false,
+  backgroundcolor=\color{gray!10},
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  numberstyle=\tiny\color{mygray},
 }
+
+\lstset{escapechar=@,style=customc}
 % Mise en page ============================
 
 \title{Options sur Best-of}
@@ -137,9 +153,10 @@ On se donne $\tilde S^i_t = e^{-rt} S^i_t$ le prix actualisé.
 Notons que la fonction $\max(\cdot)$ est une fonction convexe. Par Jensen, on a :
 
 \begin{align*}
-  P^1 = &\geq \max_i \E\left(\tilde S^i_T\right) - K\,e^{-rT}\\
-        &=  \max_i\left( \E\left(s^i_0 + \int_0^T \sigma_i \exp(\sigma_i W^i_s - \frac{1}{2} \sigma_i^2 s) \d W^i_s\right)\right) - K\,e^{-rT}\\
-        &= \max_i\Bigg(s^i_0 +  \E\Big(\underbrace{\int_0^T \sigma_i \exp(\sigma_i W^i_s - \frac{1}{2} \sigma_i^2 s) \d W^i_s}_{\geq 0}\Big)\Bigg) - K\,e^{-rT}\\
+  P^1 &\geq \max_i \E\left(\tilde S^i_T\right) - K\,e^{-rT}\\
+      &=  \max_i\left( \E\left(s^i_0 + \int_0^T \sigma_i \exp(\sigma_i W^i_s - \frac{1}{2} \sigma_i^2 s) \d W^i_s\right)\right) - K\,e^{-rT}\\
+      &= \max_i\Bigg(s^i_0 +  \E\Big(\int_0^T \sigma_i \exp(\sigma_i W^i_s - \frac{1}{2} \sigma_i^2 s) \d W^i_s\Big)\Bigg) - K\,e^{-rT}\\
+  \intertext{Notons que l'intégrale stochastique $\int_0^T \sigma_i \exp(\sigma_i W^i_s - \frac{1}{2} \sigma_i^2 s) \d W^i_s$ suit une loi normale centrée.}
   &\geq \max_i(s^i_0) - K\,e^{-rT}
 \end{align*}
 
@@ -172,6 +189,25 @@ Ainsi, par la propriété de martingale $\E(M^i_t) = \E(M^i_0) = 1$. Ceci conclu
 %%% QUESTION 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \Question{Proposer une méthode pour simuler $W(T)$. Implémenter le calcul d'un estimateur de $P^1$ par une méthode de Monte Carlo classique. On choisira pour les applications $\sigma_i = 0.3$, $S_{i,0} = 1$ $\forall i$ (sauf pour Q11), $\rho = 0.3$ (sauf pour Q6-Q10), $K = 1$ (sauf pour Q10), $r = 0.02$ et $T = 1.5$ ans. Les volatilités et le taux sont annuels.\label{Q4}}
+
+
+Pour simpuler $\bm W(T)$ il suffit de simuler en premier les trajectoires des mouvements browniens $W^1$, $W^2$ et $W^3$ puis de les corréler à l'aide de la décomposition de Chloesky de la matrice de covariation $\bm \Gamma$.
+
+Pour simuler les trajectoires du mouvement brownien on note que : \\$ W_t \overset{\text{Loi}}{=} \sqrt{t}\;N$ où $N \sim \mathcal N(0,1)$.
+
+Ainsi il faut en premier simuler la loi normale $\mathcal N(0,1)$ grâce à l'algorithme de \textbf{Box Muller}.
+
+\lstinputlisting[language=Python, firstline=12, lastline=25]{BestOf.py}
+
+Dès qu'on a une simulation de la loi normale on peut modéliser des trajectoires de mouvement browniens.
+
+\lstinputlisting[language=Python, firstline=34, lastline=55]{BestOf.py}
+
+Finalement, pour corréler les mouvements browniens, on utilise la fonction \texttt{np.linalg.cholesky} de python. 
+
+\lstinputlisting[language=Python, firstline=78, lastline=91]{BestOf.py}
+
+%%% QUESTION 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \Question{Implémenter le calcul d'un estimateur de $P^1$ par une méthode de Monte Carlo utilisant une technique de réduction de variance par variables antithétiques.}
 
