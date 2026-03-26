@@ -1,0 +1,180 @@
+\documentclass{article}
+\usepackage[french]{babel}
+
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm} 
+\usepackage{amsfonts}
+\usepackage{aliascnt}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{chngcntr}
+\usepackage{xcolor}
+\usepackage{xparse}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage[most]{tcolorbox}
+
+% newcomands ==============================
+\newcommand{\F}{\mathscr{F}}
+\newcommand{\N}{\mathscr{N}}
+\newcommand{\carE}{\mathscr{E}}
+\renewcommand{\P}{\mathds{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\sign}{\text{sign}}
+\newcommand{\supp}{\text{supp}}
+\newcommand{\refocc}{\hyperref[eq:occupation]{$(P_{t,\varphi})$}}
+\newcommand{\refcontocc}{\hyperref[proof:continuite_occ]{\textbf{Continuité de \refocc\; en $t$}}}
+\newcommand{\reffin}{\hyperref[proof:finfinfin]{$(\star)$}}
+
+\renewcommand{\d}{\mathrm{d}}
+
+\RenewDocumentCommand{\footnote}{m m}{%
+    \textit{#1}\footnotemark\footnotetext{#2}%
+  }
+
+\newcounter{questionCounter}
+\setcounter{questionCounter}{0}
+\newcommand{\Question}[1]{%
+    \stepcounter{questionCounter} % Incrémente le compteur
+    \noindent\textbf{Question \thequestionCounter :} #1
+    \par % Saut de ligne
+}
+% Mise en page ============================
+
+\title{Options sur Best-of}
+\author{Hugo De Brito, Quentin Beaurez et Héléna Benet Burgaud}
+% =========================================
+\begin{document}
+\maketitle
+
+\section{Introdution}
+Les options \textbf{Best-of} sont des produits financiers dont la valeur à l'échéance dépend de la performance du \textbf{meilleur actif} parmis un panier de sous-jacents.
+
+
+On considerera d'abord un \footnote{contrat forward}{Le {contrat forward} est un accord d'achat ou de vente d'un actif à un prix et une date future précisée dans un contrat.} sur une option Best-of puis on considerera le cas d'un \footnote{put}{Le \textit{put} désigne une option de vente}. Cette option est dépendante de la loi jointe des actifs, on étudiera en particulier cet aspect. Pour cela on utilisera la méthode de valorisation par téchnique de \textbf{Monte Carlo} dans le cadre du modèle de Black \& Scholes.
+
+\subsection{Modèle}
+
+On considère le modèle de Black \& Scholes de dimension 3. Soient $\bm S_t = (S^1_t, S^2_t, S^3_t)$ le vecteur des actifs risqués au temps $t$
+et $\bm S_0 = (s^1_0, s^2_0, s^3_0)$ le vecteur de valeurs initiales des actifs supposé déterministe. Soit $\bm W_t = (W^1_t, W^2_t, W^3_t)$ un moment brownien sous probabilité \footnote{risque neutre}{...} de matrice de covariation $\bm \Gamma$. Soit $r$ le taux d'interêts supposé constant et soit $\bm \sigma = (\sigma_1, \sigma_2, \sigma_3)$ le vecteur de volatilités.
+
+$S^i_t$ est solution de l'EDS :
+
+\begin{equation}
+  \begin{cases}\label{EDS:BlackScholes}
+    \d S^i_t &= S^i_t (r \d t + \sigma_i \d W^i_t)\\
+    S^i_0 &= s^i_0 > 0
+  \end{cases}
+\end{equation}
+
+avec
+\begin{equation*}
+\bm \Gamma = \begin{pmatrix}
+          1 & \rho & \rho \\
+          \rho & 1 & \rho \\
+          \rho & \rho & 1 \\
+        \end{pmatrix}
+      \end{equation*}
+
+et $\rho \in (-1/2, 1]$.
+
+%%% QUESTION 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Question{Calculer $\bm S_t$}
+La solution de \eqref{EDS:BlackScholes} est facilement calculable. On peut supposer sans perte de généralité que $S^i_t > 0$ ps; ceci nous permet d'écrire
+$$\frac{\d S^i_t}{S^i_t} = r \d t + \sigma_i \d W^i_t $$
+
+On reconnait la dérivée de $\log(S^i_t)$. En notant que $\log(\cdot)$ est $\mathcal C^2$ sur $\R^*_+$
+
+\begin{align*}
+  \log(S^i_t) &\overset{\text{Itō}}{=} \log(s^i_t) + \int_0^t \dfrac{1}{S^i_s} \d S^i_s + \dfrac{1}{2}\int_0^t -\dfrac{1}{(S^i_s)^2} \d [S^i]_s \quad p.s.
+  \\
+              &= \log(s^i_t) + \int_0^t r - \dfrac{\sigma_i^2}{2} \d s + \int_0^t\sigma_i \d W^i_s \quad p.s.\\
+              &= \log(s^i_t) + \left(r - \dfrac{\sigma_i^2}{2}\right)t + \sigma_i W^i_t \quad p.s.
+\end{align*}
+
+Donc 
+\begin{equation}\label{Sol:BlackScholes}
+  S^i_t = \exp\left(\log( S^i_t)\right) = s^i_0\exp\left(\left(r - \dfrac{\sigma_i^2}{2}\right)t + \sigma_i W^i_t\right) \quad p.s.\\ 
+\end{equation}
+
+Ainsi $\bm S_t = (S^1_t, S^2_t, S^3_t)$ où les $S^i_t$ sont de la forme \eqref{Sol:BlackScholes}.
+
+\section{Forward sur Best-of}
+
+Un contrat forward sur Best Of confère à son possesseur l'obligation d'acheter l'actif le plus cher parmi plusieurs actifs prédéfinis à un prix fixé à l'avance. Le prix de ce forward sur Best Of de 3 actifs est donc dans notre modèle
+
+\[
+P^1 \ = \ e^{-rT} \E \left( \max_i(S^i_T) - K \right)
+\]
+
+sous probabilité Risque Neutre.
+
+%%% QUESTION 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Question{Montrer que le prix vérifie
+
+$$ P^1 \geq \max_{i} (s^i_0) - e^{-rT}K$$}
+
+Dans quels cas simples en fonction de $\sigma$ et $\rho$ a-t-on égalité (expliquer) ?
+Soient $T>0$ et $K\in \R$ une constante déterministe. On prend  $t \in [0, T]$. 
+On se donne $\tilde S^i_t = e^{-rt} S^i_t$ le prix actualisé.
+\begin{align*}
+  \tilde S^i_t &\overset{\text{Itō}}{=} s^i_0 + \int_0^t -r e^{-rs} S^i_s \d s + \int_0^t e^{-rs} \d S^i_s,\\
+               &= s^i_0 +  \int_0^t \sigma_i e^{-rs} S^i_s \d W^i_s\\
+  &= s^i_0 + \int_0^t \sigma_i \exp\left(\sigma_i W^i_s - \frac{1}{2}\sigma_i^2 s\right) \d W^i_s
+\end{align*}
+
+\begin{equation}
+  P^1 = \E\left(\max_i(\tilde S^i_T) - K\right) =  \E\left(\max_i(\tilde S^i_T)\right) - K \,e^{-rT}
+\end{equation}
+
+Notons que la fonction $\max(\cdot)$ est une fonction convexe. Par Jensen, on a :
+
+\begin{align*}
+  P^1 = &\geq \max_i \E\left(\tilde S^i_T\right) - K\,e^{-rT}\\
+        &=  \max_i\left( \E\left(s^i_0 + \int_0^T \sigma_i \exp(\sigma_i W^i_s - \frac{1}{2} \sigma_i^2 s) \d W^i_s\right)\right) - K\,e^{-rT}\\
+        &= \max_i\Bigg(s^i_0 +  \E\Big(\underbrace{\int_0^T \sigma_i \exp(\sigma_i W^i_s - \frac{1}{2} \sigma_i^2 s) \d W^i_s}_{\geq 0}\Big)\Bigg) - K\,e^{-rT}\\
+  &\geq \max_i(s^i_0) - K\,e^{-rT}
+\end{align*}
+
+%%%%% NOTE 
+Notons de plus que $(\tilde S^i_t)_{t\in[0,T]}$ est une martingale. En effet, comme on peut exprimer  $\tilde S^i_t$ comme une intégrale stochastique : il suffit de vérifier que :
+\begin{equation}\label{Q2:condMtmart}
+  \E\left(\int_0^t \sigma_i^2 \exp\left(2 \sigma_i W^i_s - \sigma_i^2 s\right) \d s\right) < \infty \;p.s.
+  \end{equation}
+
+  Soit $M^i_t = \exp\left(2 \sigma_i W^i_s - \sigma_i^2 s\right)$. La condition \eqref{Q2:condMtmart} est vérifiée puisque $(M_t)_{t \in [0,T]}$ est une martingale, Ainsi, 
+
+  \begin{alignat}{2}
+    \text{\eqref{Q2:condMtmart}} &&\quad\Leftrightarrow\quad \E\left(\int_0^T \sigma_i^2 M_s \d s\right) &\quad=\quad \int_0^T \sigma_i^2\E(M^i_s) \d s \\
+    &&\quad=\quad \int_0^T \sigma_i^2\E(M^i_0) \d s &\quad=\quad \sigma_i^2\E(M^i_0) T\quad<\quad \infty \;p.s.
+    \end{alignat}
+
+  Montrons que $(M^i_t)_{t \in[0,T]}$ est une martingale. Tout d'abord, notons que on peut réecrire $M_t$ comme suit :
+
+$$M^i_t = \exp\left( - \int_0^t (-\sqrt{2}\sigma_i) \d W^i_s - \frac{1}{2}\int_0^t (-\sqrt{2}\sigma_i)^2 \d s\right).$$
+Par le critère de Novikov, $M^i_t$ est une martingale si $\E\left(\exp\left(\int_0^T \frac{1}{2} (-\sqrt{2}\sigma_i)^2 \d s\right)\right) < \infty \; p.s.$ Or, on a :
+\begin{equation*}
+  \E\left(\exp\left(\int_0^T \frac{1}{2} (-\sqrt{2}\sigma_i)^2 \d s\right)\right) = \E \left(\exp\left(\sigma_i^2 T\right)\right) = \exp\left(\sigma_i^2 T\right)< \infty \; p.s.
+\end{equation*}
+
+
+Ainsi, par la propriété de martingale $\E(M^i_t) = \E(M^i_0) = 1$. Ceci conclut que le prix actualisé $\tilde S^i_t$ est bien une martingale.
+
+%%%
+
+%%% QUESTION 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Question{Proposer une méthode pour simuler $W(T)$. Implémenter le calcul d'un estimateur de $P^1$ par une méthode de Monte Carlo classique. On choisira pour les applications $\sigma_i = 0.3$, $S_{i,0} = 1$ $\forall i$ (sauf pour Q11), $\rho = 0.3$ (sauf pour Q6-Q10), $K = 1$ (sauf pour Q10), $r = 0.02$ et $T = 1.5$ ans. Les volatilités et le taux sont annuels.\label{Q4}}
+
+\Question{Implémenter le calcul d'un estimateur de $P^1$ par une méthode de Monte Carlo utilisant une technique de réduction de variance par variables antithétiques.}
+
+\Question{Calculer les variances empiriques (des estimateurs) obtenues en fonction du nombre de trajectoires pour les estimations (avec et sans réduction de variance) Monte Carlo de $P^1$. Tracer sur le même graphique les estimateurs de $P^1$ en fonction du nombre de trajectoires ainsi que leurs intervalles de confiance asymptotiques à 90\%.}
+
+\end{document}
