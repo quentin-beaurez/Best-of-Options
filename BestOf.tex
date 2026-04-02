@@ -197,15 +197,20 @@ Pour simuler les trajectoires du mouvement brownien on note que : \\$ W_t \overs
 
 Ainsi il faut en premier simuler la loi normale $\mathcal N(0,1)$ grâce à l'algorithme de \textbf{Box Muller}.
 
-\lstinputlisting[language=Python, firstline=12, lastline=25]{BestOf.py}
+%\lstinputlisting[language=Python, firstline=12, lastline=25]{BestOf.py}
+{\color{purple} \textbf{code}}
+
 
 Dès qu'on a une simulation de la loi normale on peut modéliser des trajectoires de mouvement browniens.
 
-\lstinputlisting[language=Python, firstline=34, lastline=55]{BestOf.py}
+%\lstinputlisting[language=Python, firstline=34, lastline=55]{BestOf.py}
+{\color{purple} \textbf{code}}
+
 
 Finalement, pour corréler les mouvements browniens, on utilise la fonction \texttt{np.linalg.cholesky} de python. 
 
-\lstinputlisting[language=Python, firstline=78, lastline=91]{BestOf.py}
+%\lstinputlisting[language=Python, firstline=78, lastline=91]{BestOf.py}
+{\color{purple} \textbf{code}}
 
 %%% QUESTION 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
