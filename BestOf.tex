@@ -10,7 +10,7 @@
 \usepackage{dsfont}
 \usepackage{enumitem}
 \usepackage{chngcntr}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{xparse}
 \usepackage{bm}
 \usepackage{bbm}
@@ -42,7 +42,7 @@
 \setcounter{questionCounter}{0}
 \newcommand{\Question}[1]{%
     \stepcounter{questionCounter} % Incrémente le compteur
-    \bigskip\noindent\textbf{Question \thequestionCounter :} #1
+    \bigskip\noindent {\color{BlueViolet}\textbf{ Question \thequestionCounter} : #1}
     \par % Saut de ligne
   }
 
@@ -125,17 +125,13 @@ Ainsi $\bm S_t = (S^1_t, S^2_t, S^3_t)$ où les $S^i_t$ sont de la forme \eqref{
 
 Un contrat forward sur Best Of confère à son possesseur l'obligation d'acheter l'actif le plus cher parmi plusieurs actifs prédéfinis à un prix fixé à l'avance. Le prix de ce forward sur Best Of de 3 actifs est donc dans notre modèle
 
-\[
-P^1 \ = \ e^{-rT} \E \left( \max_i(S^i_T) - K \right)
-\]
+$$P^1 \ = \ e^{-rT} \E \left( \max_i(S^i_T) - K \right)$$
 
 sous probabilité Risque Neutre.
 
 %%% QUESTION 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\Question{Montrer que le prix vérifie
-
-$$ P^1 \geq \max_{i} (s^i_0) - e^{-rT}K$$}
+\Question{Montrer que le prix vérifie $$ P^1 \geq \max_{i} (s^i_0) - e^{-rT}K$$}
 
 Dans quels cas simples en fonction de $\sigma$ et $\rho$ a-t-on égalité (expliquer) ?
 Soient $T>0$ et $K\in \R$ une constante déterministe. On prend  $t \in [0, T]$. 
@@ -193,29 +189,170 @@ Ainsi, par la propriété de martingale $\E(M^i_t) = \E(M^i_0) = 1$. Ceci conclu
 
 Pour simpuler $\bm W(T)$ il suffit de simuler en premier les trajectoires des mouvements browniens $W^1$, $W^2$ et $W^3$ puis de les corréler à l'aide de la décomposition de Chloesky de la matrice de covariation $\bm \Gamma$.
 
-Pour simuler les trajectoires du mouvement brownien on note que : \\$ W_t \overset{\text{Loi}}{=} \sqrt{t}\;N$ où $N \sim \mathcal N(0,1)$.
-
-Ainsi il faut en premier simuler la loi normale $\mathcal N(0,1)$ grâce à l'algorithme de \textbf{Box Muller}.
-
-%\lstinputlisting[language=Python, firstline=12, lastline=25]{BestOf.py}
-{\color{purple} \textbf{code}}
-
-
-Dès qu'on a une simulation de la loi normale on peut modéliser des trajectoires de mouvement browniens.
-
-%\lstinputlisting[language=Python, firstline=34, lastline=55]{BestOf.py}
-{\color{purple} \textbf{code}}
-
-
-Finalement, pour corréler les mouvements browniens, on utilise la fonction \texttt{np.linalg.cholesky} de python. 
-
-%\lstinputlisting[language=Python, firstline=78, lastline=91]{BestOf.py}
-{\color{purple} \textbf{code}}
+%Pour simuler les trajectoires du mouvement brownien on note que : \\$ W_t \overset{\text{Loi}}{=} \sqrt{t}\;N$ où $N \sim \mathcal N(0,1)$.
+%
+%Ainsi il faut en premier simuler la loi normale $\mathcal N(0,1)$ grâce à l'algorithme de \textbf{Box Muller}.
+%
+%%\lstinputlisting[language=Python, firstline=12, lastline=25]{BestOf.py}
+%{\color{violet} \textbf{code}}
+%
+%
+%Dès qu'on a une simulation de la loi normale on peut modéliser des trajectoires de mouvement browniens.
+%
+%%\lstinputlisting[language=Python, firstline=34, lastline=55]{BestOf.py}
+%{\color{violet} \textbf{code}}
+%
+%
+%Finalement, pour corréler les mouvements browniens, on utilise la fonction \texttt{np.linalg.cholesky} de python. 
+%
+%%\lstinputlisting[language=Python, firstline=78, lastline=91]{BestOf.py}
+%{\color{violet} \textbf{code}}
 
 %%% QUESTION 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \Question{Implémenter le calcul d'un estimateur de $P^1$ par une méthode de Monte Carlo utilisant une technique de réduction de variance par variables antithétiques.}
 
+%%% QUESTION 5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \Question{Calculer les variances empiriques (des estimateurs) obtenues en fonction du nombre de trajectoires pour les estimations (avec et sans réduction de variance) Monte Carlo de $P^1$. Tracer sur le même graphique les estimateurs de $P^1$ en fonction du nombre de trajectoires ainsi que leurs intervalles de confiance asymptotiques à 90\%.}
+
+%%% QUESTION 6 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Question{Choisir un nombre de trajectoires pour lequel l'estimation est précise
+(avec réduction de variance seulement) (préciser votre critère) et tracer sur le
+même graphique l'estimateur de prix $P^1$ (avec réduction de variance) du forward
+en fonction de $\rho$ pour $\rho in (0.5,1)$ (garder les autres paramètres). Commenter.}
+
+\section{Put sur Best-of}
+%%% QUESTION 7 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Un \textbf{put} est une option qui confère à son possesseur le droit, mais pas l'obligation, de vendre un actif à un prix fixé à l'avance. On parle d'une option \textbf{Européene} si la date à laquelle le droit sur l'option est exercée (i.e. que l'actif est soit acheté soit vendu) est la même que la date d'échéance du contrat.
+
+
+Le prix d'un put sur l'actif $S^i$ à la date d'échéance $T$ est :
+
+$$P^{E,i} = e^{-rT} \E\left( \left( K - S^i_T \right)_+\right)$$
+sous probabilité risque neutre.
+
+\Question{Calculer analytiquement et implémenter le prix de l’option $P^{E,i}$.}
+{\color{violet}\textbf{Il manque }: Montrer que la $S^i_T$ suit une loi log-normale!!!}
+
+Rappellons que la solution $S_T^i$ est de la forme $s^i_0 \, e^{(r-\frac{\sigma_i^2}{2})T + \sigma_i W_T^i}$
+
+Ainsi on a :
+
+\begin{align*}
+  P^{E,i} &= e^{-rT} \E\left( \left( K - S^i_T \right)_+\right)\\
+%          &= \E\left( \max(0, K\,e^{-rT} - s^i_0\, e^{-\frac{\sigma_i^2}{2}T + \sigma_i W_T^i} )\right)
+            \intertext{Il est clair que dans le cas où $S_T^i \geq K$ alors le prix de l'option est égal à zéro. Ceci dit, on ne connait pas la valeur exacte de $S_T^i$, par contre on connait sa loi! En effet, on sait que $\log\left(\frac{S^i_T}{s^i_0}\right) \sim \N\left((r- \frac{\sigma_i^2}{2})\,T , \sigma_i^2 \,T\right)$. On peut dont exprimer l'esperance en fonction de la densité de $S_t^i$.}
+          &= e^{-rT} \E\left( \max\Big(0 ,  K - s^i_0\,e^{\log\left(\frac{S_T^i}{s^i_0}\right)} \Big)\right)\\
+          &= \int_{-\infty}^{+\infty} e^{-rT}\, \max\Big(0, K - s^i_0e^{\left(r - \frac{\sigma_i^2}{2}\right)\,T + \sigma_i \sqrt{T} x}\Big)p(x) \d x
+            \intertext{où $p(x)$ est la densité de la loi $\N(0,1)$.}
+\end{align*}
+
+Remarquons que le $\max$ est supérieur à zéro quand $S_T^i\leq K $. c'est à dire :
+\begin{align*}
+        s_0^i\, e^{\left(r - \frac{\sigma_i^2}{2}\right)T + \sigma_i\sqrt{T}\,x}& \leq K \\
+  \text{i.e.}\quad \sigma_i\sqrt{T}\,x &\leq \log\left(\frac{K}{s_0^i}\right) - \left(r - \frac{\sigma_i^2}{2}\right)T\\
+  \text{i.e.}\quad x &\leq \frac{\log\left(\frac{K}{s_0^i}\right) - \left(r - \frac{\sigma_i^2}{2}\right)T}{\sigma_i\sqrt{T}} = A_i\\
+\end{align*}
+
+Donc :
+
+\begin{align*}
+  P^{E,i} &= \int_{-\infty}^{A_i} e^{-rT}\Big(K - s^i_0e^{\left(r - \frac{\sigma_i^2}{2}\right)\,T + \sigma_i \sqrt{T} x}\Big)p(x) \d x,\\
+          &= \int_{-\infty}^{A_i} K e^{-rT} \, p(x) \d x -  \int_{-\infty}^{A_i}s^i_0e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x}p(x) \d x,
+  \shortintertext{En notant que $K e^{-rT}$ est une constante par rapport à $x$, on a :}
+  P^{E,i} &=  K e^{-rT}\, F(A_i) - s^i_0\int_{-\infty}^{A_i}\frac{1}{\sqrt{2 \pi}} e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x - \frac{x^2}{2}} \d x.
+\shortintertext{où $F(\xi)$ est la fonction de répartition de la loi $\N(0,1)$.}
+\intertext{Notons également que $- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x - \frac{x^2}{2} = -\frac{(x - \sigma_i\sqrt{T})^2}{2}$. Ainsi on a :}
+   P^{E,i} &=   K e^{-rT}\, F(A_i) - s^i_0\int_{-\infty}^{A_i}\frac{1}{\sqrt{2 \pi}}e^{-\frac{(x - \sigma_i\sqrt{T})^2}{2}} \d x,\\
+\shortintertext{puis, en faisant le changement de variable $y = x - \sigma_i\sqrt{T}$ on voit que le deuxième terme est aussi une fonction de répartition d'une normale $\N(0,1)$. }
+  P^{E,i}  &=   K e^{-rT} \, F(A_i) - s^i_0\int_{-\infty}^{A_i - \sigma_i\sqrt{T}}\frac{1}{\sqrt{2 \pi}}e^{-\frac{y^2}{2}} \d y,\\
+          &=  K e^{-rT}\, F(A_i) - s_0^i\,F(A_i - \sigma_i\sqrt{T} ).
+\end{align*}
+
+
+%%% QUESTION 8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Une option \textbf{put sur un Best-of} confère à son possesseur le droit mais pas l’obligation de \textbf{vendre} l’actif le \textbf{plus cher} parmi plusieurs actifs prédéfinis à un prix fixé à l’avance. Le prix de ce put sur Best Of de 3 actifs est donc dans notre modèle :
+
+
+$$P^2 = e^{-rT}\E\left(\left((K - \max_i(S^i_T)\right)_+\right)$$
+
+\Question{Déduire de la question precédente un majorant de $P^2$.}
+
+En notant que $(K - \max_i S_T^i)_+ >0$ que si pour tous les $i$, $S_T^i < K$. Ainsi on peut dire $(K - \max_i S_T^i)_+ \leq \max_i (K - S_T^i)_+$.
+
+Comme la constante $e^{-rT}$ est positive et par linéarité de l'esperance on a :
+$$P^2 = e^{-rT}\,\E\left(\left((K - \max_i(S^i_T)\right)_+\right) \leq e^{-rT}\,\E\left(\max_i  \left((K - S_T^i)_+\right) \right)$$
+
+Notons maintenant qu'on prend le maximum de v.a. positives. Ainsi, on a :
+$$\max_i(K = S_T^i)_+ \leq \sum_i (K-S_T^i)_+$$
+Donc :
+$$  P^2 \leq  e^{-rT}\,\E\left(\sum_i (K-S_T^i)_+\right) \leq \sum_i P^{E,i}.$$
+
+
+%%% QUESTION 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Question{Implémenter le calcul d'un estimateur de $ P^2 $ par une méthode de Monte Carlo utilisant une technique de réduction de variance par variables antithétiques. Tracer sur le même graphique cet estimateur en fonction du nombre de trajectoires ainsi que ses intervalles de confiance asymptotiques à 90\%. Tracer également le même graphique dans le cas $ \rho = 1 $ et ajouter à celui-ci le précédent majorant. Commenter.}
+
+%%% QUESTION 10 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Question{Choisir un nombre de trajectoires pour lequel l'estimation est précise (préciser votre critère) et tracer sur le même graphique l'estimateur de prix $ P^2 $ en fonction de $ \rho $ pour $ \rho \in [-0.5, 1] $ (garder les autres paramètres) pour $ K = 1 $, $ K = 1.2 $ et $ K = 1.5 $. Commenter.}
+
+%%% QUESTION 11 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\Question{Tracer sur un même graphique le prix $ P^{E,1} $ et l'estimateur de prix $ P^2 $ en fonction de $ S_{1,0} $ pour $ S_{1,0} \in [0, 2] $ (garder les autres paramètres). Commenter.}
+
+%%% QUESTION 12 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\Question{Utiliser un put Européen sur $S_1$ comme variable de contrôle pour en déduire un nouvel estimateur du prix $P^2$. Illustrer graphiquement cette méthode.}
+
+%%% QUESTION 13 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+Nous considérons cette fois un put sur Best Of sur $N$ sous-jacents. 
+Les sous-jacents sont modélisés avec la même dynamique, avec
+$$\Gamma = \left( \Gamma_{i,j} \right)_{i,j=1..N}, \quad \Gamma_{i,j} = \mathbf{1}_{i=j} + \rho \mathbf{1}_{i \neq j}$$
+
+Le prix du Best Of est donc dans notre modèle
+$$P^{2,N} = e^{-rT} \mathbb{E} \left[ \left( K - \max_{i=1..N}(S_T^i) \right)_+ \right]$$
+sous probabilité Risque Neutre.
+
+\Question{Choisir un nombre de trajectoires pour lequel l'estimation est précise et tracer sur un même graphique l'estimateur de prix $P^{2,N}$ en fonction de $N \in \{1, 3, 10, 25\}$ pour $\rho \in \{0, 0.5, 1\}$ (garder les autres paramètres) (on pourra utiliser une librairie externe pour correler les mouvements Browniens). Commenter.
+}
+
+\section{Call sur Best-Of}
+Un call sur un Best-of est une option qui confère à son détenteur le droit (mais pas l'obligation) d'\textbf{acheter} un actif au choix parmi plusieurs actifs prédefinis à un prix fixé à l'avance.
+
+Le prix de ce call sur Best Of de 3 actifs est donc dans notre modèle est :
+
+$$P^3 = e^{-rT} \E \left( \left( \max_iS_T^i - K \right)_+ \right)$$
+
+sous probabilité risque neutre.
+
+%%% QUESTION 14 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\Question{Quel lien existe-t-il entre le forward, le call, et le put sur Best of?}
+Rappelons d'abord les prix d'un Best-of sur un contrat forward $P^1$, sur un put $P^2$ et sur un call $P^3$ :
+
+\begin{align*}
+  P^1 &= e^{-rT} \E \left( \max_i(S_T^i) - K \right)\\
+  P^2 &=  e^{-rT} \E \left( \left( K - \max_i (S_T^i) \right)_+ \right)\\
+  P^3 &= e^{-rT} \E \left( \left( \max_i(S_T^i)) - K \right)_+ \right)
+\end{align*}
+
+Notons de plus que pour deux réels $a, b \in \mathbb R$, $(a-b)_+ - (b-a)_+ = a-b$. Ainsi, par linéaritéd de l'esperance, on a :
+
+\begin{align*}
+  P^3 - P^2 &= e^{-rT} \E \left (\left( \max_i(S_T^i) - K \right)_+ - \left( K - \max_i(S_T^i)\right)_+  \right)\\
+            &= e^{-rT} \E\left( \max_i S_T^i - K \right)\\
+            &= P^1
+\end{align*}
+
+Cette relation est connue en fincance sous le nom de \textbf{parité call-put}.
+
+
+%%% QUESTION 15 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\Question{ Calculer analytiquement le prix du forward sur Best Of sur 2 actifs
+dans ce modèle}
+
+
+
 
 \end{document}
