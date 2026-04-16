@@ -339,8 +339,8 @@ Rappelons d'abord les prix d'un Best-of sur un contrat forward $P^1$, sur un put
 Notons de plus que pour deux réels $a, b \in \mathbb R$, $(a-b)_+ - (b-a)_+ = a-b \quad(\star)$. Ainsi, par linéaritéd de l'esperance, on a :
 
 \begin{align}
-  P^3 - P^2 &= e^{-rT} \E \left (\left( \max_i(S_T^i) - K \right)_+ - \left( K - \max_i(S_T^i)\right)_+  \right) \\
-            &= e^{-rT} \E\left( \max_i S_T^i - K \right)\\
+  P^3 - P^2 &= e^{-rT} \E \left (\left( \max_i(S_T^i) - K \right)_+ - \left( K - \max_i(S_T^i)\right)_+  \right) \notag\\
+            &= e^{-rT} \E\left( \max_i S_T^i - K \right)\notag\\
             &= P^1
 \end{align}
 
@@ -361,20 +361,45 @@ Ainsi on a :
 \begin{align*}
   P^1 &= P^3 - P^2\\
       &\overset{\text{Lin.}}{=} e^{-rT}\E\left( (\max(S_T^1, S_T^2)- K)_+ - (K -\max(S_T^1, S_T^2))_+\right)\\
-      &\overset{(\star)}{=} e^{-rT}\E\left( \max(S_T^1, S_T^2)- K \right)\\
-  \intertext{Notons encore une fois que $S_t^i = \exp\left(\log (\frac{S_T^i}{s_0^i})\right)$ et que $\log\left(\frac{S^i_T}{s^i_0}\right) \sim \N\left((r- \frac{\sigma_i^2}{2})\,T , \sigma_i^2 \,T\right)$. Donc on a :}
-  P^1 &=  e^{-rT} \E \left(\max\left(s_0^1 \exp\left((r- \frac{\sigma_1^2}{2})\,T + \sigma_1\sqrt{T} Y\right), s_0^2 \exp\left((r- \frac{\sigma_2^2}{2})\,T + \sigma_2\sqrt{T} Y\right) \right)\right)\\
-  &\qquad- e^{-rT}K,
-        \shortintertext{où $Y \sim \N(0,1)$.}
-      &= \int_\R \max\left(s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right), s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\, \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
-      &\qquad - e^{-rT}K\\
-      &= \int_\R \max\left(\frac{s^1_0}{s^2_0}\exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y\right), 1\right) \cdot \left(s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\\
-      &\qquad \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y - e^{-rT}K\\
-  \intertext{Soit $g(y) = -\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y$}
-      &= \int_\R s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
-      &\qquad+ \int_\R s_0^1\exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y  - e^{-rT}K\\
-      &= s_0^1 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_1\sqrt{T})}{2}\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \d y \\
-      &\qquad+ s_0^2 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_2\sqrt{T})}{2}\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \d y  - e^{-rT}K\\
+      &\overset{(\star)}{=} e^{-rT}\E\left( \max(S_T^1, S_T^2)- K \right)
+%  \shortintertext{Comme $S_T^2$ est non nul p.s. on peut écrire :}
+%      &= e^{-rT}\E\left(S_T^2 \max\left(\frac{S_1^1}{S_T^2},1\right)\right) - e^{-rT}K 
+  \shortintertext{Puis, en utilisant la défintion trajectorelle des $S_T^i$ :}
+ P^1&=  e^{-rT} \E \left(\max\left(s_0^1 \exp\left((r- \frac{\sigma_1^2}{2})\,T + \sigma_1W_t^1\right), s_0^2 \exp\left((r- \frac{\sigma_2^2}{2})\,T + \sigma_2W_t^2\right) \right)\right)\\
+      &\qquad- e^{-rT}K,\\
+    &= \E\left(\max\left(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \sigma_1W_t^1\right), s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2W_t^2\right) \right)\right) - e^{-rT}K,
+      \intertext{Les mouvements browniens $(W_t^1)_t$ et $(W_t^2)_t$ sont corrélés de coefficient de correlation $\rho$. On est donc embétés pour calculer cette esperance puisque on ne connait pas la loi jointe de $W_T^1$ et $W_T^2$. On introduit donc un troisième mouvement brownien stantard $(B_t)_t$ définit comme suit $B_t := \frac{W_t^2 - \rho \,W_t^1}{\sqrt{1-\rho^2}}$ indépendant de $W_t^1$. Ainsi,  $W_t^2 = \sqrt{1-\rho^2}(B_t + \rho W_t^1)$. Maintenant on veut calculer l'esperance d'une fonction de deux mouvement browniens standards \textbf{indépendants}, donc de densité jointe égale au produit des densités.}
+      \intertext{}
+P^1 &=  \E \left(\max\left(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \sigma_1W_T^1\right), s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}(B_t + \rho W_T^1)\right) \right)\right)\\
+      &\qquad- e^{-rT}K,\\
+      &=  \E \Bigg(\exp\left(\sigma_2 \rho \sqrt{1-\rho^2} W_T^1\right)\,\max\Bigg(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) W_T^1\right), \\
+      &\qquad s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}B_T \right) \Bigg)\Bigg) - e^{-rT}K,
+        \intertext{Comme $W_t^1$ et $B_t$ sont tout deux des mouvements browniens standards, on peut les écrire comme $W_t^1 \overset{\text{Loi}}{=} \sqrt{t}X$ et $B_t \overset{\text{Loi}}{=} \sqrt{t}Y$ où $X$ et $Y$ sont iid de loi $\N(0,1)$. }
+  P^1 &=  \E \Bigg(\exp\left(\sigma_2 \rho \sqrt{1-\rho^2} \sqrt{T} X\right)\,\max\Bigg(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) \sqrt{T} X\right), \\
+      &\qquad s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} Y \right) \Bigg)\Bigg) - e^{-rT}K,\\
+      &= \int_\R\int_\R \exp\left(\sigma_2 \rho \sqrt{1-\rho^2} \sqrt{T} x\right)\,\max\Bigg(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) \sqrt{T} x\right),\\
+      &\qquad s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y \right) \Bigg) p_X(x) \cdot p_Y(y) \d y \,\d x - e^{-rT}K,\\
+  \shortintertext{où $p_X$ et $p_Y$ sont les densités (respectives) des v.a. $X$ et $Y$.}
+      &= \int_\R\int_{-\infty}^{A} s^1_0 \exp\left(\frac{\sigma_1^2}{2}\,T + \sigma_1 \sqrt{T} x\right) p_X(x) \cdot p_Y(y) \d y\, \d x\\
+      &\qquad \int_\R \int_{A}^{+\infty}s^2_0 \exp\left(\frac{\sigma_2^2}{2}T + \sigma_2 \sqrt{1-\rho^2}\sqrt{T}(y + \rho x)\right) p_X(x) \cdot p_Y(y)\d y\, \d x - e^{-rT}K,
+        \shortintertext{où $A = \dfrac{(\sigma_1^2 - \sigma_2^2) + 2\sigma_1}{\rho\sqrt{1-\rho^2}\sqrt{T}} - \sigma_2x$.}
+%   P^1 &= \E\left(S_T^2 \max\left(\frac{s_0^1}{s_0^2}\, \exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + \left(\sigma_1W_T^1 - \sigma_2\sqrt{1-\rho^2}(B_T + \rho W_T^1)\right)\right),1\right)\right) - e^{-rT}K,\\
+%      &= \E\left(S_T^2 \max\left(\frac{s_0^1}{s_0^2}\, \exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2\, \rho\sqrt{1-\rho^2}\,) \, W_T^1 - \sigma_2\sqrt{1-\rho^2}B_T\right)\right),1\right) - e^{-rT}K
+ %       \intertext{Soit $ja$}
+ %       &= \int_\R \int_R
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%      &=  E^{-rT} \E \left(\max\left(s_0^1 \exp\left((r- \frac{\sigma_1^2}{2})\,T + \sigma_1\sqrt{T} Y\right), s_0^2 \exp\left((r- \frac{\sigma_2^2}{2})\,T + \sigma_2\sqrt{T} Y\right) \right)\right)\\
+%  &\qquad- e^{-rT}K,
+%        \shortintertext{où $Y \sim \N(0,1)$.}
+%      &= \int_\R \max\left(s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right), s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\, \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
+%      &\qquad - e^{-rT}K\\
+%      &= \int_\R \max\left(\frac{s^1_0}{s^2_0}\exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y\right), 1\right) \cdot \left(s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\\
+%      &\qquad \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y - e^{-rT}K\\
+%  \intertext{Soit $g(y) = -\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y$}
+%      &= \int_\R s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
+%      &\qquad+ \int_\R s_0^1\exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y  - e^{-rT}K\\
+%      &= s_0^1 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_1\sqrt{T})}{2}\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \d y \\
+%      &\qquad+ s_0^2 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_2\sqrt{T})}{2}\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \d y  - e^{-rT}K\\
 \end{align*}
 
 
