@@ -336,23 +336,46 @@ Rappelons d'abord les prix d'un Best-of sur un contrat forward $P^1$, sur un put
   P^3 &= e^{-rT} \E \left( \left( \max_i(S_T^i)) - K \right)_+ \right)
 \end{align*}
 
-Notons de plus que pour deux réels $a, b \in \mathbb R$, $(a-b)_+ - (b-a)_+ = a-b$. Ainsi, par linéaritéd de l'esperance, on a :
+Notons de plus que pour deux réels $a, b \in \mathbb R$, $(a-b)_+ - (b-a)_+ = a-b \quad(\star)$. Ainsi, par linéaritéd de l'esperance, on a :
 
-\begin{align*}
-  P^3 - P^2 &= e^{-rT} \E \left (\left( \max_i(S_T^i) - K \right)_+ - \left( K - \max_i(S_T^i)\right)_+  \right)\\
+\begin{align}
+  P^3 - P^2 &= e^{-rT} \E \left (\left( \max_i(S_T^i) - K \right)_+ - \left( K - \max_i(S_T^i)\right)_+  \right) \\
             &= e^{-rT} \E\left( \max_i S_T^i - K \right)\\
             &= P^1
-\end{align*}
+\end{align}
 
 Cette relation est connue en fincance sous le nom de \textbf{parité call-put}.
 
 
 %%% QUESTION 15 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-\Question{ Calculer analytiquement le prix du forward sur Best Of sur 2 actifs
+\Question{ Calculer analytiquement le prix du forward sur Best-of sur 2 actifs
 dans ce modèle}
 
+Par la question précédente, on a que le prix d'un forward $P^1$ sur un Best-of satisfait la relation $P^1 = P^3 - P^2$ où $P^2$ est le prix d'un put sur un Best-of et $P^3$ est le prix d'un call sur un Best-of.
 
+Notons que on cherche à calculer le prix du forwar sur un Best-of sur \textbf{deux} actifs. Donc le $\max_i S_T^i = \max(S_T^1, S_T^2) = S_T^2\max\left(\frac{S_T^1}{S_T^2},1\right)$.
+
+Ainsi on a :
+
+\begin{align*}
+  P^1 &= P^3 - P^2\\
+      &\overset{\text{Lin.}}{=} e^{-rT}\E\left( (\max(S_T^1, S_T^2)- K)_+ - (K -\max(S_T^1, S_T^2))_+\right)\\
+      &\overset{(\star)}{=} e^{-rT}\E\left( \max(S_T^1, S_T^2)- K \right)\\
+  \intertext{Notons encore une fois que $S_t^i = \exp\left(\log (\frac{S_T^i}{s_0^i})\right)$ et que $\log\left(\frac{S^i_T}{s^i_0}\right) \sim \N\left((r- \frac{\sigma_i^2}{2})\,T , \sigma_i^2 \,T\right)$. Donc on a :}
+  P^1 &=  e^{-rT} \E \left(\max\left(s_0^1 \exp\left((r- \frac{\sigma_1^2}{2})\,T + \sigma_1\sqrt{T} Y\right), s_0^2 \exp\left((r- \frac{\sigma_2^2}{2})\,T + \sigma_2\sqrt{T} Y\right) \right)\right)\\
+  &\qquad- e^{-rT}K,
+        \shortintertext{où $Y \sim \N(0,1)$.}
+      &= \int_\R \max\left(s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right), s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\, \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
+      &\qquad - e^{-rT}K\\
+      &= \int_\R \max\left(\frac{s^1_0}{s^2_0}\exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y\right), 1\right) \cdot \left(s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\\
+      &\qquad \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y - e^{-rT}K\\
+  \intertext{Soit $g(y) = -\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y$}
+      &= \int_\R s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
+      &\qquad+ \int_\R s_0^1\exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y  - e^{-rT}K\\
+      &= s_0^1 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_1\sqrt{T})}{2}\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \d y \\
+      &\qquad+ s_0^2 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_2\sqrt{T})}{2}\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \d y  - e^{-rT}K\\
+\end{align*}
 
 
 \end{document}
