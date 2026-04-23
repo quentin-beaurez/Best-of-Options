@@ -253,33 +253,44 @@ Remarquons que le $\max$ est supérieur à zéro quand $S_T^i\leq K $. c'est à 
 \begin{align*}
         s_0^i\, e^{\left(r - \frac{\sigma_i^2}{2}\right)T + \sigma_i\sqrt{T}\,x}& \leq K \\
   \text{i.e.}\quad \sigma_i\sqrt{T}\,x &\leq \log\left(\frac{K}{s_0^i}\right) - \left(r - \frac{\sigma_i^2}{2}\right)T\\
-  \text{i.e.}\quad x &\leq \frac{\log\left(\frac{K}{s_0^i}\right) - \left(r - \frac{\sigma_i^2}{2}\right)T}{\sigma_i\sqrt{T}} = A_i\\
+  \text{i.e.}\quad x &\leq \frac{\log\left(\frac{K}{s_0^i}\right) - \left(r - \frac{\sigma_i^2}{2}\right)T}{\sigma_i\sqrt{T}} = - d_1\\
 \end{align*}
 
 Donc :
 
 \begin{align*}
-  P^{E,i} &= \int_{-\infty}^{A_i} e^{-rT}\Big(K - s^i_0e^{\left(r - \frac{\sigma_i^2}{2}\right)\,T + \sigma_i \sqrt{T} x}\Big)p(x) \d x,\\
-          &= \int_{-\infty}^{A_i} K e^{-rT} \, p(x) \d x -  \int_{-\infty}^{A_i}s^i_0e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x}p(x) \d x,
+  P^{E,i} &= \int_{-\infty}^{- d_1} e^{-rT}\Big(K - s^i_0e^{\left(r - \frac{\sigma_i^2}{2}\right)\,T + \sigma_i \sqrt{T} x}\Big)p(x) \d x,\\
+          &= \int_{-\infty}^{- d_1} K e^{-rT} \, p(x) \d x -  \int_{-\infty}^{- d_1}s^i_0e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x}p(x) \d x,
   \shortintertext{En notant que $K e^{-rT}$ est une constante par rapport à $x$, on a :}
-  P^{E,i} &=  K e^{-rT}\, F(A_i) - s^i_0\int_{-\infty}^{A_i}\frac{1}{\sqrt{2 \pi}} e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x - \frac{x^2}{2}} \d x.
+  P^{E,i} &=  K e^{-rT}\, F(- d_1) - s^i_0\int_{-\infty}^{- d_1}\frac{1}{\sqrt{2 \pi}} e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x - \frac{x^2}{2}} \d x.
 \shortintertext{où $F(\xi)$ est la fonction de répartition de la loi $\N(0,1)$.}
 \intertext{Notons également que $- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x - \frac{x^2}{2} = -\frac{(x - \sigma_i\sqrt{T})^2}{2}$. Ainsi on a :}
-   P^{E,i} &=   K e^{-rT}\, F(A_i) - s^i_0\int_{-\infty}^{A_i}\frac{1}{\sqrt{2 \pi}}e^{-\frac{(x - \sigma_i\sqrt{T})^2}{2}} \d x,\\
+   P^{E,i} &=   K e^{-rT}\, F(- d_1) - s^i_0\int_{-\infty}^{- d_1}\frac{1}{\sqrt{2 \pi}}e^{-\frac{(x - \sigma_i\sqrt{T})^2}{2}} \d x,\\
 \shortintertext{puis, en faisant le changement de variable $y = x - \sigma_i\sqrt{T}$ on voit que le deuxième terme est aussi une fonction de répartition d'une normale $\N(0,1)$. }
-  P^{E,i}  &=   K e^{-rT} \, F(A_i) - s^i_0\int_{-\infty}^{A_i - \sigma_i\sqrt{T}}\frac{1}{\sqrt{2 \pi}}e^{-\frac{y^2}{2}} \d y,\\
-          &=  K e^{-rT}\, F(A_i) - s_0^i\,F(A_i - \sigma_i\sqrt{T} ).
+  P^{E,i}  &=   K e^{-rT} \, F(- d_1) - s^i_0\int_{-\infty}^{- d_1 - \sigma_i\sqrt{T}}\frac{1}{\sqrt{2 \pi}}e^{-\frac{y^2}{2}} \d y,\\
+          &=  K e^{-rT}\, F(- d_1) - s_0^i\,F(- d_1 - \sigma_i\sqrt{T} ).\\
+          &=  K e^{-rT}\, F(- d_1) - s_0^i\,F(-d_2 ).
 \end{align*}
 
 
 %%% QUESTION 8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Une option \textbf{put sur un Best-of} confère à son possesseur le droit mais pas l’obligation de \textbf{vendre} l’actif le \textbf{plus cher} parmi plusieurs actifs prédéfinis à un prix fixé à l’avance. Le prix de ce put sur Best Of de 3 actifs est donc dans notre modèle :
-
-
-$$P^2 = e^{-rT}\E\left(\left((K - \max_i(S^i_T)\right)_+\right)$$
-
-\Question{Déduire de la question precédente un majorant de $P^2$.}
+%Une option \textbf{put sur un Best-of} confère à son possesseur le droit mais pas l’obligation de \textbf{vendre} l’actif le \textbf{plus cher} parmi plusieurs actifs prédéfinis à un prix fixé à l’avance. Le prix de ce put sur Best Of de 3 actifs est donc dans notre modèle :
+%
+%
+%$$P^2 = e^{-rT}\E\left(\left((K - \max_i(S^i_T)\right)_+\right)$$
+%
+%\Question{Déduire de la question precédente un majorant de $P^2$.}
+%
+%En notant que $(K - \max_i S_T^i)_+ >0$ que si pour tous les $i$, $S_T^i < K$. Ainsi on peut dire $(K - \max_i S_T^i)_+ \leq \max_i (K - S_T^i)_+$.
+%
+%Comme la constante $e^{-rT}$ est positive et par linéarité de l'esperance on a :
+%$$P^2 = e^{-rT}\,\E\left(\left((K - \max_i(S^i_T)\right)_+\right) \leq e^{-rT}\,\E\left(\max_i  \left((K - S_T^i)_+\right) \right)$$
+%
+%Notons maintenant qu'on prend le maximum de v.a. positives. Ainsi, on a :
+%$$\max_i(K = S_T^i)_+ \leq \sum_i (K-S_T^i)_+$$
+%Donc :
+%$$  P^2 \leq  e^{-rT}\,\E\left(\sum_i (K-S_T^i)_+\right) \leq \sum_i P^{E,i}.$$
 
 Partons du fait que $$ \underset{i}{\text{moyenne}} S^i_T \leq \max_i S^i_T $$
 
@@ -287,17 +298,13 @@ Alors,
 
 \begin{align*}
           & K - \max_i S^i_T  \leq K - \underset{i}{\text{moyenne}} S^i_T \\
-\implies  & \left( K - \max_i S^i_T \right)_+ \leq \left( K - \underset{i}{\text{moyenne}} S^i_T \right)_+ \\
-\implies  & \left( K - \max_i S^i_T \right)_+ \leq \left( \underset{i}{\text{moyenne}} (K - S^i_T) \right)_+ \leq \underset{i}{\text{moyenne}} \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace
+\implies  & \left( K - \max_i S^i_T \right)+ \leq \left( K - \underset{i}{\text{moyenne}} S^i_T \right)+ \\
+\implies  & \left( K - \max_i S^i_T \right)+ \leq \left( \underset{i}{\text{moyenne}} (K - S^i_T) \right)+ \leq \underset{i}{\text{moyenne}} \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace
 \end{align*}
 
 D'où, 
 
-$$ P^2 = e^{-rT} \E\left(\left((K - \max_i(S^i_T)\right)_+\right) \leq   e^{-rT} \E \left( \dfrac{1}{n} \sum_{i=1}^n  \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace \right) \leq  e^{-rT} \, \underset{i}{\text{moyenne}} P^{E, i} $$
-
-
-
-
+$$ P^2 = e^{-rT} \E\left(\left((K - \max_i(S^i_T)\right)+\right) \leq   e^{-rT} \E \left( \dfrac{1}{n} \sum{i=1}^n  \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace \right) \leq  e^{-rT} \, \underset{i}{\text{moyenne}} P^{E, i} $$
 %%% QUESTION 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Question{Implémenter le calcul d'un estimateur de $ P^2 $ par une méthode de Monte Carlo utilisant une technique de réduction de variance par variables antithétiques. Tracer sur le même graphique cet estimateur en fonction du nombre de trajectoires ainsi que ses intervalles de confiance asymptotiques à 90\%. Tracer également le même graphique dans le cas $ \rho = 1 $ et ajouter à celui-ci le précédent majorant. Commenter.}
 
@@ -374,38 +381,22 @@ Ainsi on a :
  P^1&=  e^{-rT} \E \left(\max\left(s_0^1 \exp\left((r- \frac{\sigma_1^2}{2})\,T + \sigma_1W_t^1\right), s_0^2 \exp\left((r- \frac{\sigma_2^2}{2})\,T + \sigma_2W_t^2\right) \right)\right)\\
       &\qquad- e^{-rT}K,\\
     &= \E\left(\max\left(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1W_t^1\right), s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2W_t^2\right) \right)\right) - e^{-rT}K,
-      \intertext{Les mouvements browniens $(W_t^1)_t$ et $(W_t^2)_t$ sont corrélés de coefficient de correlation $\rho$. On est donc embétés pour calculer cette esperance puisque on ne connait pas la loi jointe de $W_T^1$ et $W_T^2$. On introduit donc un troisième mouvement brownien stantard $(B_t)_t$ définit comme suit $B_t := \frac{W_t^2 - \rho \,W_t^1}{\sqrt{1-\rho^2}}$ indépendant de $W_t^1$. Ainsi,  $W_t^2 = \sqrt{1-\rho^2}(B_t + \rho W_t^1)$. Maintenant on veut calculer l'esperance d'une fonction de deux mouvement browniens standards \textbf{indépendants}, donc de densité jointe égale au produit des densités.}
+      \intertext{Les mouvements browniens $(W_t^1)_t$ et $(W_t^2)_t$ sont corrélés de coefficient de correlation $\rho$. On est donc embétés pour calculer cette esperance puisque on ne connait pas la loi jointe de $W_T^1$ et $W_T^2$. On introduit donc un troisième mouvement brownien stantard $(B_t)_t$ définit comme suit $B_t := \frac{W_t^2 - \rho \,W_t^1}{\sqrt{1-\rho^2}}$ indépendant de $W_t^1$. Ainsi,  $W_t^2 = \sqrt{1-\rho^2}B_t + \rho W_t^1$. Maintenant on veut calculer l'esperance d'une fonction de deux mouvement browniens standards \textbf{indépendants}, donc de densité jointe égale au produit des densités.}
       \intertext{}
-P^1 &=  \E \left(\max\left(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1W_T^1\right), s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}(B_t + \rho W_T^1)\right) \right)\right)\\
+P^1 &=  \E \left(\max\left(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1W_T^1\right), s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2(\sqrt{1-\rho^2}B_T + \rho W_T^1)\right) \right)\right)\\
       &\qquad- e^{-rT}K,\\
-      &=  \E \Bigg(\exp\left(\sigma_2 \rho \sqrt{1-\rho^2} W_T^1\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) W_T^1\right), \\
+      &=  \E \Bigg(\exp\left(\sigma_2 \rho W_T^1\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho\right) W_T^1\right), \\
       &\qquad s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}B_T \right) \Bigg)\Bigg) - e^{-rT}K,
         \intertext{Comme $W_t^1$ et $B_t$ sont tout deux des mouvements browniens standards, on peut les écrire comme $W_t^1 \overset{\text{Loi}}{=} \sqrt{t}X$ et $B_t \overset{\text{Loi}}{=} \sqrt{t}Y$ où $X$ et $Y$ sont iid de loi $\N(0,1)$. }
-  P^1 &=  \E \Bigg(\exp\left(\sigma_2 \rho \sqrt{1-\rho^2} \sqrt{T} X\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) \sqrt{T} X\right), \\
+  P^1 &=  \E \Bigg(\exp\left(\sigma_2 \rho \sqrt{T} X\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho\right) \sqrt{T} X\right), \\
       &\qquad s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} Y \right) \Bigg)\Bigg) - e^{-rT}K,\\
-      &= \int_\R\int_\R \exp\left(\sigma_2 \rho \sqrt{1-\rho^2} \sqrt{T} x\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) \sqrt{T} x\right),\\
+      &= \int_\R\int_\R \exp\left(\sigma_2 \rho \sqrt{T} x\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho\right) \sqrt{T} x\right),\\
       &\qquad s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y \right) \Bigg) p_X(x) \cdot p_Y(y) \d y \,\d x - e^{-rT}K,\\
   \shortintertext{où $p_X$ et $p_Y$ sont les densités (respectives) des v.a. $X$ et $Y$.}
       &= \int_\R\int_{-\infty}^{A} s^1_0 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1 \sqrt{T} x\right) p_X(x) \cdot p_Y(y) \d y\, \d x\\
-      &\qquad + \int_\R \int_{A}^{+\infty}s^2_0 \exp\left(- \frac{\sigma_2^2}{2}T + \sigma_2 \sqrt{1-\rho^2}\sqrt{T}(y + \rho x)\right) p_X(x) \cdot p_Y(y)\d y\, \d x - e^{-rT}K,
-        \shortintertext{où $A = \dfrac{(\sigma_1^2 - \sigma_2^2) + 2\sigma_1}{\rho\sqrt{1-\rho^2}\sqrt{T}} - \sigma_2x$.}
-%   P^1 &= \E\left(S_T^2 \max\left(\frac{s_0^1}{s_0^2}\, \exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + \left(\sigma_1W_T^1 - \sigma_2\sqrt{1-\rho^2}(B_T + \rho W_T^1)\right)\right),1\right)\right) - e^{-rT}K,\\
-%      &= \E\left(S_T^2 \max\left(\frac{s_0^1}{s_0^2}\, \exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2\, \rho\sqrt{1-\rho^2}\,) \, W_T^1 - \sigma_2\sqrt{1-\rho^2}B_T\right)\right),1\right) - e^{-rT}K
- %       \intertext{Soit $ja$}
- %       &= \int_\R \int_R
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%      &=  E^{-rT} \E \left(\max\left(s_0^1 \exp\left((r- \frac{\sigma_1^2}{2})\,T + \sigma_1\sqrt{T} Y\right), s_0^2 \exp\left((r- \frac{\sigma_2^2}{2})\,T + \sigma_2\sqrt{T} Y\right) \right)\right)\\
-%  &\qquad- e^{-rT}K,
-%        \shortintertext{où $Y \sim \N(0,1)$.}
-%      &= \int_\R \max\left(s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right), s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\, \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
-%      &\qquad - e^{-rT}K\\
-%      &= \int_\R \max\left(\frac{s^1_0}{s^2_0}\exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y\right), 1\right) \cdot \left(s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\\
-%      &\qquad \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y - e^{-rT}K\\
-%  \intertext{Soit $g(y) = -\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y$}
-%      &= \int_\R s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
-%      &\qquad+ \int_\R s_0^1\exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y  - e^{-rT}K\\
-%      &= s_0^1 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_1\sqrt{T})}{2}\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \d y \\
-%      &\qquad+ s_0^2 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_2\sqrt{T})}{2}\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \d y  - e^{-rT}K\\
+      &\qquad + \int_\R \int_{A}^{+\infty}s^2_0 \exp\left(- \frac{\sigma_2^2}{2}T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y + \sigma_2 \rho \sqrt{T} x\right) p_X(x) \cdot p_Y(y)\d y\, \d x \\
+      &\qquad - e^{-rT}K,
+        \shortintertext{où $A = \dfrac{(\sigma_1^2 - \sigma_2^2) + 2\sigma_1}{\rho\sqrt{1-\rho^2}\sqrt{T}} - \sigma_2x$.}        
 \end{align*}
 
 
