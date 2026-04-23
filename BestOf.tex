@@ -393,10 +393,27 @@ P^1 &=  \E \left(\max\left(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1W
       &= \int_\R\int_\R \exp\left(\sigma_2 \rho \sqrt{T} x\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho\right) \sqrt{T} x\right),\\
       &\qquad s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y \right) \Bigg) p_X(x) \cdot p_Y(y) \d y \,\d x - e^{-rT}K,\\
   \shortintertext{où $p_X$ et $p_Y$ sont les densités (respectives) des v.a. $X$ et $Y$.}
-      &= \int_\R\int_{-\infty}^{A} s^1_0 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1 \sqrt{T} x\right) p_X(x) \cdot p_Y(y) \d y\, \d x\\
-      &\qquad + \int_\R \int_{A}^{+\infty}s^2_0 \exp\left(- \frac{\sigma_2^2}{2}T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y + \sigma_2 \rho \sqrt{T} x\right) p_X(x) \cdot p_Y(y)\d y\, \d x \\
+      &= \int_\R\int_{-\infty}^{d} s^1_0 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1 \sqrt{T} x\right) p_X(x) \cdot p_Y(y) \d y\, \d x\\
+      &\qquad + \int_\R \int_{d}^{+\infty}s^2_0 \exp\left(- \frac{\sigma_2^2}{2}T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y + \sigma_2 \rho \sqrt{T} x\right) p_X(x) \cdot p_Y(y)\d y\, \d x \\
       &\qquad - e^{-rT}K,
-        \shortintertext{où $A = \dfrac{(\sigma_1^2 - \sigma_2^2) + 2\sigma_1}{\rho\sqrt{1-\rho^2}\sqrt{T}} - \sigma_2x$.}        
+        \shortintertext{où $d_x = \dfrac{\log\left(\frac{s_0^2}{s_0^1}\right) + \frac{\sigma_1^2 - \sigma_2^2}{2}T - \sqrt{T}(\sigma_1 - \sigma_2 \rho)x}{\sigma_2\sqrt{1-\rho^2}\sqrt{T}}$.}
+%      &= \int_\R s_0^1 \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right) \underbrace{\int_{-\infty}^{A}p_Y(y) \d y}_{F_Y(A)} \,\d x  - e^{-rT}K\\
+%      &\qquad+ \int_\R s_0^2 \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right) \int_A^{+\infty} \exp\left(\sigma_2\sqrt{1-\rho^2}\sqrt{T} y \right) p_Y(y) \d y\, \d x\\
+%      &= \int_\R \frac{s_0^1}{\sqrt{2\pi}} \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right)F_Y(A)\d x  - e^{-rT}K\\
+%      &\qquad+ \exp\left( \frac{\sigma_2^2 (1-\rho^2)T}{2}\right) \int_\R \frac{s_0^2}{\sqrt{2\pi}} \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right) \\
+%  &\qquad \cdot \underbrace{\int_A^{+\infty}\frac{1}{\sqrt{2\pi}} \exp\left(- \frac{(y - \sigma_2\sqrt{1-\rho^2}\sqrt{T})^2}{2}\right)\d y}_{-F_{Y + \sigma_2\sqrt{1-\rho^2}\sqrt{T}}(-A)}\, \d x\\
+%      &=  \int_\R \frac{s_0^1}{\sqrt{2\pi}} \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right)F_Y(A)\d x - e^{-rT}K\\
+%      &\qquad -  \exp\left( \frac{\sigma_2^2 (1-\rho^2)T}{2}\right) \,\int_\R \frac{s_0^2}{\sqrt{2\pi}} \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right) \, F_{Y + \sigma_2\sqrt{1-\rho^2}\sqrt{T}}(-A) \d x \\
+%      &= s_0^1 \int_\R p_{X + \sigma_1\sqrt{T}}(x) \,F_Y(A) \d x - s_0^2 e^{\frac{\sigma_2^2 (1-\rho^2)T}{2}}\int_\R p_{x + \sigma_1\sqrt{T}}\, F_{Y + \sigma_2\sqrt{1-\rho^2}\sqrt{T}}(-A) \d x - e^{-rT}K
+\end{align*}
+\begin{align*}
+      =& \int_\R s_0^1 \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right) \underbrace{\int_{-\infty}^{d_x}p_Y(y) \d y}_{F_{\N(0,1)}(d_x)} \,\d x  - e^{-rT}K\\
+      &\qquad+ \int_\R s_0^2 \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right) \int_{d_x}^{+\infty} \exp\left(\sigma_2\sqrt{1-\rho^2}\sqrt{T} y \right) p_Y(y) \d y\, \d x\\
+      &= \int_\R \frac{s_0^1}{\sqrt{2\pi}} \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right)F(d_x)\d x  - e^{-rT}K\\
+       &\qquad+ e^{\frac{\sigma_2^2 (1-\rho^2)T}{2}}\int_\R \frac{s_0^2}{\sqrt{2\pi}} \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right) \underbrace{\int_{d_x}^{+\infty}\frac{1}{\sqrt{2\pi}} \exp\left(- \frac{(y - \sigma_2\sqrt{1-\rho^2}\sqrt{T})^2}{2}\right)\d y}_{F_{\N{\left(\sigma_2\sqrt{1-\rho^2}\sqrt{T},1\right)}(-{d_x})}}\, \d x\\
+      &=  \int_\R \frac{s_0^1}{\sqrt{2\pi}} \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right)F(d_x)\d x - e^{-rT}K\\
+      &\qquad + e^{\frac{\sigma_2^2 (1-\rho^2)T}{2}} \,\int_\R \frac{s_0^2}{\sqrt{2\pi}} \exp\left(- \frac{(x - \sigma_1\sqrt{T})^2}{2}\right) \,F_{\N\left(\sigma_2\sqrt{1-\rho^2}\sqrt{T},1\right)}(-d_x)\d x \\
+      &=  \int_\R s_0^1 \, p_{\N\left(\sigma_1\sqrt{T},1\right)}(x) \,F(d_x)  + s_0^2\, e^{\frac{\sigma_2^2 (1-\rho^2)T}{2}} p_{\N\left(\sigma_1\sqrt{T},1\right)}\, F_{\N\left(\sigma_2\sqrt{1-\rho^2}\sqrt{T},1\right)}(-d_x) \d x - e^{-rT}K
 \end{align*}
 
 
