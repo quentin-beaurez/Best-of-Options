@@ -367,21 +367,21 @@ Ainsi on a :
   \shortintertext{Puis, en utilisant la défintion trajectorelle des $S_T^i$ :}
  P^1&=  e^{-rT} \E \left(\max\left(s_0^1 \exp\left((r- \frac{\sigma_1^2}{2})\,T + \sigma_1W_t^1\right), s_0^2 \exp\left((r- \frac{\sigma_2^2}{2})\,T + \sigma_2W_t^2\right) \right)\right)\\
       &\qquad- e^{-rT}K,\\
-    &= \E\left(\max\left(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \sigma_1W_t^1\right), s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2W_t^2\right) \right)\right) - e^{-rT}K,
+    &= \E\left(\max\left(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1W_t^1\right), s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2W_t^2\right) \right)\right) - e^{-rT}K,
       \intertext{Les mouvements browniens $(W_t^1)_t$ et $(W_t^2)_t$ sont corrélés de coefficient de correlation $\rho$. On est donc embétés pour calculer cette esperance puisque on ne connait pas la loi jointe de $W_T^1$ et $W_T^2$. On introduit donc un troisième mouvement brownien stantard $(B_t)_t$ définit comme suit $B_t := \frac{W_t^2 - \rho \,W_t^1}{\sqrt{1-\rho^2}}$ indépendant de $W_t^1$. Ainsi,  $W_t^2 = \sqrt{1-\rho^2}(B_t + \rho W_t^1)$. Maintenant on veut calculer l'esperance d'une fonction de deux mouvement browniens standards \textbf{indépendants}, donc de densité jointe égale au produit des densités.}
       \intertext{}
-P^1 &=  \E \left(\max\left(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \sigma_1W_T^1\right), s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}(B_t + \rho W_T^1)\right) \right)\right)\\
+P^1 &=  \E \left(\max\left(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1W_T^1\right), s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}(B_t + \rho W_T^1)\right) \right)\right)\\
       &\qquad- e^{-rT}K,\\
-      &=  \E \Bigg(\exp\left(\sigma_2 \rho \sqrt{1-\rho^2} W_T^1\right)\,\max\Bigg(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) W_T^1\right), \\
-      &\qquad s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}B_T \right) \Bigg)\Bigg) - e^{-rT}K,
+      &=  \E \Bigg(\exp\left(\sigma_2 \rho \sqrt{1-\rho^2} W_T^1\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) W_T^1\right), \\
+      &\qquad s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}B_T \right) \Bigg)\Bigg) - e^{-rT}K,
         \intertext{Comme $W_t^1$ et $B_t$ sont tout deux des mouvements browniens standards, on peut les écrire comme $W_t^1 \overset{\text{Loi}}{=} \sqrt{t}X$ et $B_t \overset{\text{Loi}}{=} \sqrt{t}Y$ où $X$ et $Y$ sont iid de loi $\N(0,1)$. }
-  P^1 &=  \E \Bigg(\exp\left(\sigma_2 \rho \sqrt{1-\rho^2} \sqrt{T} X\right)\,\max\Bigg(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) \sqrt{T} X\right), \\
-      &\qquad s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} Y \right) \Bigg)\Bigg) - e^{-rT}K,\\
-      &= \int_\R\int_\R \exp\left(\sigma_2 \rho \sqrt{1-\rho^2} \sqrt{T} x\right)\,\max\Bigg(s_0^1 \exp\left(\frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) \sqrt{T} x\right),\\
-      &\qquad s_0^2 \exp\left(\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y \right) \Bigg) p_X(x) \cdot p_Y(y) \d y \,\d x - e^{-rT}K,\\
+  P^1 &=  \E \Bigg(\exp\left(\sigma_2 \rho \sqrt{1-\rho^2} \sqrt{T} X\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) \sqrt{T} X\right), \\
+      &\qquad s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} Y \right) \Bigg)\Bigg) - e^{-rT}K,\\
+      &= \int_\R\int_\R \exp\left(\sigma_2 \rho \sqrt{1-\rho^2} \sqrt{T} x\right)\,\max\Bigg(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \left(\sigma_1 - \sigma_2 \rho \sqrt{1-\rho^2}\right) \sqrt{T} x\right),\\
+      &\qquad s_0^2 \exp\left(- \frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y \right) \Bigg) p_X(x) \cdot p_Y(y) \d y \,\d x - e^{-rT}K,\\
   \shortintertext{où $p_X$ et $p_Y$ sont les densités (respectives) des v.a. $X$ et $Y$.}
-      &= \int_\R\int_{-\infty}^{A} s^1_0 \exp\left(\frac{\sigma_1^2}{2}\,T + \sigma_1 \sqrt{T} x\right) p_X(x) \cdot p_Y(y) \d y\, \d x\\
-      &\qquad \int_\R \int_{A}^{+\infty}s^2_0 \exp\left(\frac{\sigma_2^2}{2}T + \sigma_2 \sqrt{1-\rho^2}\sqrt{T}(y + \rho x)\right) p_X(x) \cdot p_Y(y)\d y\, \d x - e^{-rT}K,
+      &= \int_\R\int_{-\infty}^{A} s^1_0 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1 \sqrt{T} x\right) p_X(x) \cdot p_Y(y) \d y\, \d x\\
+      &\qquad + \int_\R \int_{A}^{+\infty}s^2_0 \exp\left(- \frac{\sigma_2^2}{2}T + \sigma_2 \sqrt{1-\rho^2}\sqrt{T}(y + \rho x)\right) p_X(x) \cdot p_Y(y)\d y\, \d x - e^{-rT}K,
         \shortintertext{où $A = \dfrac{(\sigma_1^2 - \sigma_2^2) + 2\sigma_1}{\rho\sqrt{1-\rho^2}\sqrt{T}} - \sigma_2x$.}
 %   P^1 &= \E\left(S_T^2 \max\left(\frac{s_0^1}{s_0^2}\, \exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + \left(\sigma_1W_T^1 - \sigma_2\sqrt{1-\rho^2}(B_T + \rho W_T^1)\right)\right),1\right)\right) - e^{-rT}K,\\
 %      &= \E\left(S_T^2 \max\left(\frac{s_0^1}{s_0^2}\, \exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2\, \rho\sqrt{1-\rho^2}\,) \, W_T^1 - \sigma_2\sqrt{1-\rho^2}B_T\right)\right),1\right) - e^{-rT}K
