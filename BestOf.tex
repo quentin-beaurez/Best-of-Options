@@ -281,23 +281,29 @@ $$P^2 = e^{-rT}\E\left(\left((K - \max_i(S^i_T)\right)_+\right)$$
 
 \Question{Déduire de la question precédente un majorant de $P^2$.}
 
-Partons du fait que $$ \underset{i}{\text{moyenne}} S^i_T \leq \max_i S^i_T $$
+En notant que $(K - \max_i S_T^i)_+ >0$ que si pour tous les $i$, $S_T^i < K$. Ainsi on peut dire $(K - \max_i S_T^i)_+ \leq \max_i (K - S_T^i)_+$.
+
+Comme la constante $e^{-rT}$ est positive et par linéarité de l'esperance on a :
+$$P^2 = e^{-rT}\,\E\left(\left((K - \max_i(S^i_T)\right)_+\right) \leq e^{-rT}\,\E\left(\max_i  \left((K - S_T^i)_+\right) \right)$$
+
+Notons maintenant qu'on prend le maximum de v.a. positives. Ainsi, on a :
+$$\max_i(K = S_T^i)_+ \leq \sum_i (K-S_T^i)_+$$
+Donc :
+$$  P^2 \leq  e^{-rT}\,\E\left(\sum_i (K-S_T^i)_+\right) \leq \sum_i P^{E,i}.$$
+
+{\color{red}Partons du fait que $$ \underset{i}{\text{moyenne}} S^i_T \leq \max_i S^i_T $$
 
 Alors,
 
 \begin{align*}
           & K - \max_i S^i_T  \leq K - \underset{i}{\text{moyenne}} S^i_T \\
-\implies  & \left( K - \max_i S^i_T \right)_+ \leq \left( K - \underset{i}{\text{moyenne}} S^i_T \right)_+ \\
-\implies  & \left( K - \max_i S^i_T \right)_+ \leq \left( \underset{i}{\text{moyenne}} (K - S^i_T) \right)_+ \leq \underset{i}{\text{moyenne}} \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace
+\implies  & \left( K - \max_i S^i_T \right)+ \leq \left( K - \underset{i}{\text{moyenne}} S^i_T \right)+ \\
+\implies  & \left( K - \max_i S^i_T \right)+ \leq \left( \underset{i}{\text{moyenne}} (K - S^i_T) \right)+ \leq \underset{i}{\text{moyenne}} \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace
 \end{align*}
 
 D'où, 
 
-$$ P^2 = e^{-rT} \E\left(\left((K - \max_i(S^i_T)\right)_+\right) \leq   e^{-rT} \E \left( \dfrac{1}{n} \sum_{i=1}^n  \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace \right) \leq  e^{-rT} \, \underset{i}{\text{moyenne}} P^{E, i} $$
-
-
-
-
+$$ P^2 = e^{-rT} \E\left(\left((K - \max_i(S^i_T)\right)+\right) \leq   e^{-rT} \E \left( \dfrac{1}{n} \sum{i=1}^n  \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace \right) \leq  e^{-rT} \, \underset{i}{\text{moyenne}} P^{E, i} $$}
 %%% QUESTION 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Question{Implémenter le calcul d'un estimateur de $ P^2 $ par une méthode de Monte Carlo utilisant une technique de réduction de variance par variables antithétiques. Tracer sur le même graphique cet estimateur en fonction du nombre de trajectoires ainsi que ses intervalles de confiance asymptotiques à 90\%. Tracer également le même graphique dans le cas $ \rho = 1 $ et ajouter à celui-ci le précédent majorant. Commenter.}
 
@@ -390,23 +396,6 @@ P^1 &=  \E \left(\max\left(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1W
       &\qquad + \int_\R \int_{A}^{+\infty}s^2_0 \exp\left(- \frac{\sigma_2^2}{2}T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y + \sigma_2 \rho \sqrt{T} x\right) p_X(x) \cdot p_Y(y)\d y\, \d x \\
       &\qquad - e^{-rT}K,
         \shortintertext{où $A = \dfrac{(\sigma_1^2 - \sigma_2^2) + 2\sigma_1}{\rho\sqrt{1-\rho^2}\sqrt{T}} - \sigma_2x$.}
-%   P^1 &= \E\left(S_T^2 \max\left(\frac{s_0^1}{s_0^2}\, \exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + \left(\sigma_1W_T^1 - \sigma_2\sqrt{1-\rho^2}(B_T + \rho W_T^1)\right)\right),1\right)\right) - e^{-rT}K,\\
-%      &= \E\left(S_T^2 \max\left(\frac{s_0^1}{s_0^2}\, \exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2\, \rho\sqrt{1-\rho^2}\,) \, W_T^1 - \sigma_2\sqrt{1-\rho^2}B_T\right)\right),1\right) - e^{-rT}K
- %       \intertext{Soit $ja$}
- %       &= \int_\R \int_R
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%      &=  E^{-rT} \E \left(\max\left(s_0^1 \exp\left((r- \frac{\sigma_1^2}{2})\,T + \sigma_1\sqrt{T} Y\right), s_0^2 \exp\left((r- \frac{\sigma_2^2}{2})\,T + \sigma_2\sqrt{T} Y\right) \right)\right)\\
-%  &\qquad- e^{-rT}K,
-%        \shortintertext{où $Y \sim \N(0,1)$.}
-%      &= \int_\R \max\left(s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right), s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\, \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
-%      &\qquad - e^{-rT}K\\
-%      &= \int_\R \max\left(\frac{s^1_0}{s^2_0}\exp\left(-\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y\right), 1\right) \cdot \left(s_0^2 \exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right)\right)\\
-%      &\qquad \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y - e^{-rT}K\\
-%  \intertext{Soit $g(y) = -\frac{\sigma_1^2 - \sigma_2^2}{2}T + (\sigma_1 - \sigma_2)\sqrt{T}y$}
-%      &= \int_\R s_0^1\exp\left(-\frac{\sigma_1^2}{2}\,T + \sigma_1\sqrt{T} y\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y \\
-%      &\qquad+ \int_\R s_0^1\exp\left(-\frac{\sigma_2^2}{2}\,T + \sigma_2\sqrt{T} y\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \cdot \frac{1}{\sqrt{2\,\pi}}\exp\left(-\frac{y^2}{2}\right) \d y  - e^{-rT}K\\
-%      &= s_0^1 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_1\sqrt{T})}{2}\right) \1_{g(y) > \log\left(\frac{s_0^2}{s_0^1} \right)} \d y \\
-%      &\qquad+ s_0^2 \int_\R \frac{1}{\sqrt{2\,\pi}} \exp\left(-\frac{(y - \sigma_2\sqrt{T})}{2}\right) \1_{g(y) \leq \log\left(\frac{s_0^2}{s_0^1} \right)} \d y  - e^{-rT}K\\
 \end{align*}
 
 
