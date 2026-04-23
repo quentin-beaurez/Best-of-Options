@@ -253,45 +253,46 @@ Remarquons que le $\max$ est supérieur à zéro quand $S_T^i\leq K $. c'est à 
 \begin{align*}
         s_0^i\, e^{\left(r - \frac{\sigma_i^2}{2}\right)T + \sigma_i\sqrt{T}\,x}& \leq K \\
   \text{i.e.}\quad \sigma_i\sqrt{T}\,x &\leq \log\left(\frac{K}{s_0^i}\right) - \left(r - \frac{\sigma_i^2}{2}\right)T\\
-  \text{i.e.}\quad x &\leq \frac{\log\left(\frac{K}{s_0^i}\right) - \left(r - \frac{\sigma_i^2}{2}\right)T}{\sigma_i\sqrt{T}} = A_i\\
+  \text{i.e.}\quad x &\leq \frac{\log\left(\frac{K}{s_0^i}\right) - \left(r - \frac{\sigma_i^2}{2}\right)T}{\sigma_i\sqrt{T}} = - d_1\\
 \end{align*}
 
 Donc :
 
 \begin{align*}
-  P^{E,i} &= \int_{-\infty}^{A_i} e^{-rT}\Big(K - s^i_0e^{\left(r - \frac{\sigma_i^2}{2}\right)\,T + \sigma_i \sqrt{T} x}\Big)p(x) \d x,\\
-          &= \int_{-\infty}^{A_i} K e^{-rT} \, p(x) \d x -  \int_{-\infty}^{A_i}s^i_0e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x}p(x) \d x,
+  P^{E,i} &= \int_{-\infty}^{- d_1} e^{-rT}\Big(K - s^i_0e^{\left(r - \frac{\sigma_i^2}{2}\right)\,T + \sigma_i \sqrt{T} x}\Big)p(x) \d x,\\
+          &= \int_{-\infty}^{- d_1} K e^{-rT} \, p(x) \d x -  \int_{-\infty}^{- d_1}s^i_0e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x}p(x) \d x,
   \shortintertext{En notant que $K e^{-rT}$ est une constante par rapport à $x$, on a :}
-  P^{E,i} &=  K e^{-rT}\, F(A_i) - s^i_0\int_{-\infty}^{A_i}\frac{1}{\sqrt{2 \pi}} e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x - \frac{x^2}{2}} \d x.
+  P^{E,i} &=  K e^{-rT}\, F(- d_1) - s^i_0\int_{-\infty}^{- d_1}\frac{1}{\sqrt{2 \pi}} e^{- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x - \frac{x^2}{2}} \d x.
 \shortintertext{où $F(\xi)$ est la fonction de répartition de la loi $\N(0,1)$.}
 \intertext{Notons également que $- \frac{\sigma_i^2}{2}\,T + \sigma_i \sqrt{T} x - \frac{x^2}{2} = -\frac{(x - \sigma_i\sqrt{T})^2}{2}$. Ainsi on a :}
-   P^{E,i} &=   K e^{-rT}\, F(A_i) - s^i_0\int_{-\infty}^{A_i}\frac{1}{\sqrt{2 \pi}}e^{-\frac{(x - \sigma_i\sqrt{T})^2}{2}} \d x,\\
+   P^{E,i} &=   K e^{-rT}\, F(- d_1) - s^i_0\int_{-\infty}^{- d_1}\frac{1}{\sqrt{2 \pi}}e^{-\frac{(x - \sigma_i\sqrt{T})^2}{2}} \d x,\\
 \shortintertext{puis, en faisant le changement de variable $y = x - \sigma_i\sqrt{T}$ on voit que le deuxième terme est aussi une fonction de répartition d'une normale $\N(0,1)$. }
-  P^{E,i}  &=   K e^{-rT} \, F(A_i) - s^i_0\int_{-\infty}^{A_i - \sigma_i\sqrt{T}}\frac{1}{\sqrt{2 \pi}}e^{-\frac{y^2}{2}} \d y,\\
-          &=  K e^{-rT}\, F(A_i) - s_0^i\,F(A_i - \sigma_i\sqrt{T} ).
+  P^{E,i}  &=   K e^{-rT} \, F(- d_1) - s^i_0\int_{-\infty}^{- d_1 - \sigma_i\sqrt{T}}\frac{1}{\sqrt{2 \pi}}e^{-\frac{y^2}{2}} \d y,\\
+          &=  K e^{-rT}\, F(- d_1) - s_0^i\,F(- d_1 - \sigma_i\sqrt{T} ).\\
+          &=  K e^{-rT}\, F(- d_1) - s_0^i\,F(-d_2 ).
 \end{align*}
 
 
 %%% QUESTION 8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Une option \textbf{put sur un Best-of} confère à son possesseur le droit mais pas l’obligation de \textbf{vendre} l’actif le \textbf{plus cher} parmi plusieurs actifs prédéfinis à un prix fixé à l’avance. Le prix de ce put sur Best Of de 3 actifs est donc dans notre modèle :
+%Une option \textbf{put sur un Best-of} confère à son possesseur le droit mais pas l’obligation de \textbf{vendre} l’actif le \textbf{plus cher} parmi plusieurs actifs prédéfinis à un prix fixé à l’avance. Le prix de ce put sur Best Of de 3 actifs est donc dans notre modèle :
+%
+%
+%$$P^2 = e^{-rT}\E\left(\left((K - \max_i(S^i_T)\right)_+\right)$$
+%
+%\Question{Déduire de la question precédente un majorant de $P^2$.}
+%
+%En notant que $(K - \max_i S_T^i)_+ >0$ que si pour tous les $i$, $S_T^i < K$. Ainsi on peut dire $(K - \max_i S_T^i)_+ \leq \max_i (K - S_T^i)_+$.
+%
+%Comme la constante $e^{-rT}$ est positive et par linéarité de l'esperance on a :
+%$$P^2 = e^{-rT}\,\E\left(\left((K - \max_i(S^i_T)\right)_+\right) \leq e^{-rT}\,\E\left(\max_i  \left((K - S_T^i)_+\right) \right)$$
+%
+%Notons maintenant qu'on prend le maximum de v.a. positives. Ainsi, on a :
+%$$\max_i(K = S_T^i)_+ \leq \sum_i (K-S_T^i)_+$$
+%Donc :
+%$$  P^2 \leq  e^{-rT}\,\E\left(\sum_i (K-S_T^i)_+\right) \leq \sum_i P^{E,i}.$$
 
-
-$$P^2 = e^{-rT}\E\left(\left((K - \max_i(S^i_T)\right)_+\right)$$
-
-\Question{Déduire de la question precédente un majorant de $P^2$.}
-
-En notant que $(K - \max_i S_T^i)_+ >0$ que si pour tous les $i$, $S_T^i < K$. Ainsi on peut dire $(K - \max_i S_T^i)_+ \leq \max_i (K - S_T^i)_+$.
-
-Comme la constante $e^{-rT}$ est positive et par linéarité de l'esperance on a :
-$$P^2 = e^{-rT}\,\E\left(\left((K - \max_i(S^i_T)\right)_+\right) \leq e^{-rT}\,\E\left(\max_i  \left((K - S_T^i)_+\right) \right)$$
-
-Notons maintenant qu'on prend le maximum de v.a. positives. Ainsi, on a :
-$$\max_i(K = S_T^i)_+ \leq \sum_i (K-S_T^i)_+$$
-Donc :
-$$  P^2 \leq  e^{-rT}\,\E\left(\sum_i (K-S_T^i)_+\right) \leq \sum_i P^{E,i}.$$
-
-{\color{red}Partons du fait que $$ \underset{i}{\text{moyenne}} S^i_T \leq \max_i S^i_T $$
+Partons du fait que $$ \underset{i}{\text{moyenne}} S^i_T \leq \max_i S^i_T $$
 
 Alors,
 
@@ -303,7 +304,7 @@ Alors,
 
 D'où, 
 
-$$ P^2 = e^{-rT} \E\left(\left((K - \max_i(S^i_T)\right)+\right) \leq   e^{-rT} \E \left( \dfrac{1}{n} \sum{i=1}^n  \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace \right) \leq  e^{-rT} \, \underset{i}{\text{moyenne}} P^{E, i} $$}
+$$ P^2 = e^{-rT} \E\left(\left((K - \max_i(S^i_T)\right)+\right) \leq   e^{-rT} \E \left( \dfrac{1}{n} \sum{i=1}^n  \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace \right) \leq  e^{-rT} \, \underset{i}{\text{moyenne}} P^{E, i} $$
 %%% QUESTION 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Question{Implémenter le calcul d'un estimateur de $ P^2 $ par une méthode de Monte Carlo utilisant une technique de réduction de variance par variables antithétiques. Tracer sur le même graphique cet estimateur en fonction du nombre de trajectoires ainsi que ses intervalles de confiance asymptotiques à 90\%. Tracer également le même graphique dans le cas $ \rho = 1 $ et ajouter à celui-ci le précédent majorant. Commenter.}
 
@@ -395,7 +396,7 @@ P^1 &=  \E \left(\max\left(s_0^1 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1W
       &= \int_\R\int_{-\infty}^{A} s^1_0 \exp\left(- \frac{\sigma_1^2}{2}\,T + \sigma_1 \sqrt{T} x\right) p_X(x) \cdot p_Y(y) \d y\, \d x\\
       &\qquad + \int_\R \int_{A}^{+\infty}s^2_0 \exp\left(- \frac{\sigma_2^2}{2}T + \sigma_2\sqrt{1-\rho^2}\sqrt{T} y + \sigma_2 \rho \sqrt{T} x\right) p_X(x) \cdot p_Y(y)\d y\, \d x \\
       &\qquad - e^{-rT}K,
-        \shortintertext{où $A = \dfrac{(\sigma_1^2 - \sigma_2^2) + 2\sigma_1}{\rho\sqrt{1-\rho^2}\sqrt{T}} - \sigma_2x$.}
+        \shortintertext{où $A = \dfrac{(\sigma_1^2 - \sigma_2^2) + 2\sigma_1}{\rho\sqrt{1-\rho^2}\sqrt{T}} - \sigma_2x$.}        
 \end{align*}
 
 
