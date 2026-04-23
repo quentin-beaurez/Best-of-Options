@@ -281,15 +281,21 @@ $$P^2 = e^{-rT}\E\left(\left((K - \max_i(S^i_T)\right)_+\right)$$
 
 \Question{Déduire de la question precédente un majorant de $P^2$.}
 
-En notant que $(K - \max_i S_T^i)_+ >0$ que si pour tous les $i$, $S_T^i < K$. Ainsi on peut dire $(K - \max_i S_T^i)_+ \leq \max_i (K - S_T^i)_+$.
+Partons du fait que $$ \underset{i}{\text{moyenne}} S^i_T \leq \max_i S^i_T $$
 
-Comme la constante $e^{-rT}$ est positive et par linéarité de l'esperance on a :
-$$P^2 = e^{-rT}\,\E\left(\left((K - \max_i(S^i_T)\right)_+\right) \leq e^{-rT}\,\E\left(\max_i  \left((K - S_T^i)_+\right) \right)$$
+Alors,
 
-Notons maintenant qu'on prend le maximum de v.a. positives. Ainsi, on a :
-$$\max_i(K = S_T^i)_+ \leq \sum_i (K-S_T^i)_+$$
-Donc :
-$$  P^2 \leq  e^{-rT}\,\E\left(\sum_i (K-S_T^i)_+\right) \leq \sum_i P^{E,i}.$$
+\begin{align*}
+          & K - \max_i S^i_T  \leq K - \underset{i}{\text{moyenne}} S^i_T \\
+\implies  & \left( K - \max_i S^i_T \right)_+ \leq \left( K - \underset{i}{\text{moyenne}} S^i_T \right)_+ \\
+\implies  & \left( K - \max_i S^i_T \right)_+ \leq \left( \underset{i}{\text{moyenne}} (K - S^i_T) \right)_+ \leq \underset{i}{\text{moyenne}} \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace
+\end{align*}
+
+D'où, 
+
+$$ P^2 = e^{-rT} \E\left(\left((K - \max_i(S^i_T)\right)_+\right) \leq   e^{-rT} \E \left( \dfrac{1}{n} \sum_{i=1}^n  \left\lbrace \left( K - S^i_T \right)_+ \right\rbrace \right) \leq  e^{-rT} \, \underset{i}{\text{moyenne}} P^{E, i} $$
+
+
 
 
 %%% QUESTION 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
